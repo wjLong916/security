@@ -9,6 +9,7 @@
     <module>security-core</module>
     <module>security-oath2</module>
     <module>security-browsers</module>
+    <module>security-demo</module>
   </modules>
   <packaging>pom</packaging>
 
