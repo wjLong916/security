@@ -17,7 +17,9 @@
   <url>http://maven.apache.org</url>
 
   <properties>
+    <guava.version>23.1-jre</guava.version>
     <security.version>1.0.0-SNAPSHOT</security.version>
+    <lombok.version>1.16.8</lombok.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
