@@ -13,6 +13,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserControllerTest {
@@ -78,5 +82,31 @@ public class UserControllerTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void whenCreateSuccess() throws Exception {
+        Date birthday = new Date();
+        String content = "{\"id\":1,\"name\":\"Lzy\",\"password\":\"12345\",\"birthday\":"+birthday.getTime()+"}";
+//         String content = "{\"id\":1,\"name\":\"Lzy\",\"password\":null,\"birthday\":"+birthday.getTime()+"}";
+        mockMvc.perform(MockMvcRequestBuilders.post("/user/createUser")
+        .contentType(MediaType.APPLICATION_JSON_UTF8).content(content))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value("1"));
+
+    }
+
+
+
+    @Test
+    public void whenDeleteSuccess() throws Exception {
+        Date birthday = new Date(LocalDateTime.now().plusYears(1).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli());
+        String content = "{\"id\":1,\"name\":\"Lzy\",\"password\":\"12345\",\"birthday\":"+birthday.getTime()+"}";
+//         String content = "{\"id\":1,\"name\":\"Lzy\",\"password\":null,\"birthday\":"+birthday.getTime()+"}";
+        mockMvc.perform(MockMvcRequestBuilders.delete("/user/delete/1")
+                .contentType(MediaType.APPLICATION_JSON_UTF8).content(content))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+               ;
+
     }
 }
