@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import com.lwj.security.demo.dto.User;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.omg.CORBA.portable.ApplicationException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,12 @@ public class UserController {
        user.setName("Lwj");
        user.setPassword("123");
         return user;
+    }
+
+    @GetMapping("/findUser")
+    @JsonView(User.UserInfoView.class)
+    public User findUser(String id){
+       throw new RuntimeException("测试异常");
     }
 
 //    @RequestMapping(value = "/user/{id:\\d+}",method = RequestMethod.GET)
@@ -56,10 +63,8 @@ public class UserController {
     }
 
     @PostMapping("/createUser")
-    public User createUser(@Valid @RequestBody User user , BindingResult errors){
-        if(errors.hasErrors()){
-            errors.getAllErrors().stream().forEach(error -> System.out.println(error.getDefaultMessage()));
-        }
+    public User createUser(@Valid @RequestBody User user){
+
         System.out.println(ReflectionToStringBuilder.toString(user, ToStringStyle.MULTI_LINE_STYLE));
         return user;
     }
